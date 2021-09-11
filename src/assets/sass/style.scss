@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap");
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: url(../img/bg.jpg);
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  font-family: "ZCOOL KuaiLe";
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  padding: 0 2rem;
+}
+
+.container > * {
+  width: 100%;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__card {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__icons-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1rem solid chocolate;
+    border-radius: 3px;
+    width: 5.5rem;
+    background: rgb(90, 50, 22);
+  }
+
+  &__icons {
+    font-size: 3rem;
+    color: rgb(251, 255, 0);
+  }
+
+  &__text {
+    background: rgb(90, 50, 22);
+    color: #fff;
+    font-size: 1.8rem;
+    border: 1rem solid chocolate;
+    box-shadow: 0 0 2px #ccc;
+    padding: 0px 3px;
+  }
+
+  &__btns {
+    margin-top: 6rem;
+    display: flex;
+    width: 50%;
+  }
+
+  &__start,
+  &__end {
+    width: 50%;
+    padding: 1rem 0;
+    border: 0;
+    border-radius: 0;
+    background-color: darkgoldenrod;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 0 13px rgb(66, 57, 57);
+    transform: translateY(-3px);
+    transition: all 0.3s;
+  }
+
+  &__start:active,
+  &__end:active {
+    box-shadow: 0 0 8px rgb(51, 51, 51);
+    transform: translateY(-1px);
+  }
+
+  &__start {
+    margin-right: 1rem;
+  }
+}
+
+.game {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__box {
+    width: 100%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    grid-gap: 1.5rem;
+    position: relative;
+  }
+}
+.cards {
+  filter: brightness(0.7);
+  height: auto;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+
+  &__layer {
+    position: absolute;
+  }
+
+  &__layer--active {
+    background: transparent;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+  }
+
+  &__items {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transition: transform 0.7s;
+  }
+
+  &__front {
+    transform: rotateY(-180deg);
+    overflow: hidden;
+  }
+
+  &__front img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__back {
+    backface-visibility: hidden;
+    background: url(../img/gold.jpg);
+  }
+}
+
+.cards--active .cards__front {
+  transform: rotateY(0);
+}
+
+.cards--active .cards__back {
+  transform: rotateY(180deg);
+}
