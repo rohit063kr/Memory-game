@@ -45,7 +45,7 @@ body {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
   padding: 0 2rem;
   position: relative;
 }
@@ -198,7 +198,8 @@ body {
   justify-content: center;
   width: 100%;
 }
-.user__start, .user__end {
+.user__start,
+.user__end {
   width: 50%;
   padding: 1rem 0;
   border: 0;
@@ -211,7 +212,8 @@ body {
   transform: translateY(-3px);
   transition: all 0.3s;
 }
-.user__start:active, .user__end:active {
+.user__start:active,
+.user__end:active {
   box-shadow: 0 0 8px #333333;
   transform: translateY(-1px);
 }
