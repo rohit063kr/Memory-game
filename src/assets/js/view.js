@@ -27,9 +27,9 @@ export const renderLoader = function () {
 
 export const renderGame = function (data) {
   console.log(data);
-  const time = data.length ? Math.min(...data.map(el => el.time)) : '50';
-  const min = `${Math.trunc(time / 60)}`.padStart(2, 0);
-  const sec = `${time % 60}`.padStart(2, 0);
+  const time = data.length ? Math.min(...data.map(el => el.time)) : undefined;
+  const min = time ? `${Math.trunc(time / 60)}`.padStart(2, 0) : '';
+  const sec = time ? `${time % 60}`.padStart(2, 0) : 'NOT DEFINED';
 
   const markup = `
   <div class="details">
@@ -172,7 +172,9 @@ export const showTimer = function (time) {
 
 export const addHandlerStartGame = function (handler, getUser) {
   startBtn.addEventListener('click', function () {
-    const userName = prompt('Your name');
+    let userName = prompt('Your name');
+    if (!userName)
+      userName = prompt('Please fill your name before get started');
     getUser(userName);
     container.innerHTML = '';
     handler();
