@@ -173,8 +173,8 @@ export const showTimer = function (time) {
 export const addHandlerStartGame = function (handler, getUser) {
   startBtn.addEventListener('click', function () {
     let userName = prompt('Your name');
-    if (!userName)
-      userName = prompt('Please fill your name before get started');
+    if (!userName) userName = 'Unknown';
+
     getUser(userName);
     container.innerHTML = '';
     handler();
@@ -189,16 +189,23 @@ export const renderHtml = function (data) {
       <th>User name</th>
       <th>Timetaken</th>
     </tr>
-    ${data
-      .map(
-        el => `
+    ${
+      data.length
+        ? data
+            .map(
+              el => `
     <tr>
       <td>${el.userName}</td>
       <td>${el.time} sec</td>
     </tr>
   `
-      )
-      .join('')}
+            )
+            .join('')
+        : ` <tr>
+      <th>Not found</th>
+      <th>Not found</th>
+    </tr>`
+    }
   </table>
   <ul class="user__tips-list">
     <li class="user__tips-list-item">
