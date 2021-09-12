@@ -5,13 +5,12 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --out-dir ./dist"
+    "build": "parcel build src/index.html --dist-dir ./dist"
   },
   "devDependencies": {
     "core-js": "^3.17.2",
     "parcel": "^2.0.0-rc.0",
     "regenerator-runtime": "^0.13.9",
-    "sass": "^1.39.0",
-    "url": "^0.11.0"
+    "sass": "^1.39.0"
   }
 }
