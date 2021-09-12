@@ -6,18 +6,24 @@ import 'regenerator-runtime/runtime';
 import 'core-js/stable';
 
 const controleArrangement = async function () {
-  // Rendering game html
-  view.renderGame();
+  try {
+    view.renderLoader();
+    // Rendering game html
+    view.renderGame(model.state.usersData);
 
-  // Getting Imgs
-  await model.getImgs([4, 4]);
+    // Getting Imgs
+    await model.getImgs([4, 4]);
 
-  // Inserting cards
-  model.state.game.imgsData.forEach(data => view.insertCard(data));
+    // Inserting cards
+    model.state.game.imgsData.forEach(data => view.insertCard(data));
 
-  view.addHandlerCard(controleWinner);
+    view.addHandlerCard(controleWinner);
 
-  view.startTimer(controleTimer);
+    view.startTimer(controleTimer);
+  } catch (err) {
+    view.renderErr(err.message);
+    console.error(err);
+  }
 };
 
 const controleTimer = function () {
@@ -35,19 +41,26 @@ const controleUserName = function (user) {
 };
 
 const controleWinner = function () {
+  view.renderLoader();
   model.state.result.time = model.state.play.time;
   model.saveGame();
-
-  view.renderHtml(model.state.usersData);
+  window.location.reload();
 };
 
 const controleLoadGame = function () {
+  view.renderLoader();
   model.loadGame();
   view.renderHtml(model.state.usersData);
+};
+
+const controleReset = function () {
+  model.clearGameData();
+  window.location.reload();
 };
 
 const init = function () {
   controleLoadGame();
   view.addHandlerStartGame(controleArrangement, controleUserName);
+  view.addHandlerReset(controleReset);
 };
 init();

@@ -2,33 +2,48 @@ import { wait } from './helper.js';
 
 import 'regenerator-runtime/runtime';
 
-let cardContainer, timerDom, gameLayer, startBtn;
+let cardContainer, timerDom, gameLayer, startBtn, resetBtn;
 // let cardLayer;
 const container = document.querySelector('.container');
 
 let twoSelectedCards = [];
 let allCards;
+const defaultErrMsg =
+  'Please check your internet connection or try again letter';
+
+export const renderErr = function (msg = defaultErrMsg) {
+  container.innerHTML = '';
+  container.insertAdjacentHTML(
+    'afterbegin',
+    `<div class="user"><p style="font-size:1.8rem; word-spacing:.7rem">${msg}</p></div>`
+  );
+};
 
 export const renderLoader = function () {
-  const markup = `<img class="loader__img" src="https://cdn.dribbble.com/users/216925/screenshots/2044807/bolt.gif">`;
+  const markup = `<div class="loader user"><img class="loader__img" src="https://cdn.dribbble.com/users/216925/screenshots/2044807/bolt.gif"></div>`;
   container.innerHTML = '';
   container.insertAdjacentHTML('afterbegin', markup);
 };
 
-export const renderGame = function () {
+export const renderGame = function (data) {
+  console.log(data);
+  const time = data.length ? Math.min(...data.map(el => el.time)) : '50';
+  const min = `${Math.trunc(time / 60)}`.padStart(2, 0);
+  const sec = `${time % 60}`.padStart(2, 0);
+
   const markup = `
   <div class="details">
         <div class="details__card">
           <div class="details__icons-box">
             <i class="far fa-clock details__icons"></i>
           </div>
-          <span class="details__text" id="timer">00:00</span>
+          <span class="details__text" id="timer">00:00 min</span>
         </div>
         <div class="details__card">
           <div class="details__icons-box">
             <i class="fas fa-trophy details__icons"></i>
           </div>
-          <span class="details__text">00:00</span>
+          <span class="details__text">${min}:${sec} min</span>
         </div>
       
         </div>
@@ -39,6 +54,7 @@ export const renderGame = function () {
   </div>
       `;
 
+  container.innerHTML = '';
   container.insertAdjacentHTML('afterbegin', markup);
 
   cardContainer = document.querySelector('.game__box');
@@ -127,7 +143,10 @@ export const addHandlerCard = function (winGame) {
     }
 
     allCards = Array.from(cardContainer.querySelectorAll('.cards'));
-    if (allCards.every(el => el.classList.contains('cards--active'))) winGame();
+    if (allCards.every(el => el.classList.contains('cards--active'))) {
+      await wait(1);
+      winGame();
+    }
   });
 };
 
@@ -135,7 +154,7 @@ let min, sec;
 export const showTimer = function (time) {
   min = `${Math.trunc(time / 60)}`.padStart(2, '0');
   sec = `${time % 60}`.padStart(2, '0');
-  timerDom.textContent = `${min}:${sec}`;
+  timerDom.textContent = `${min}:${sec} min`;
 
   // if (time < 30) changeBorderColor('goldenrod');
   // if (time < 10) changeBorderColor('orangered');
@@ -188,10 +207,11 @@ export const renderHtml = function (data) {
       The score depends on the time you had taken to solve the game
     </li>
     <li class="user__tips-list-item">
-      The timer will start as you select start button
+      The timer will start as you select start b  utton
     </li>
   </ul>
   <div class="user__btns">
+    <button class="user__start" id="reset-btn">Reset Scores</button>
     <button class="user__start" id="start-btn">Start</button>
   </div>
   </div>`;
@@ -199,4 +219,9 @@ export const renderHtml = function (data) {
   container.innerHTML = '';
   container.insertAdjacentHTML('afterbegin', markup);
   startBtn = document.querySelector('#start-btn');
+  resetBtn = document.querySelector('#reset-btn');
+};
+
+export const addHandlerReset = function (handler) {
+  resetBtn.addEventListener('click', handler);
 };

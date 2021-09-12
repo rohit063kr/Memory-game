@@ -241,7 +241,11 @@ body {
 }
 
 .loader {
+  padding: 0 0;
+  width: 50%;
+
   &__img {
     opacity: 0.7;
+    width: 100%;
   }
 }

@@ -20,29 +20,38 @@ export const state = {
 
 let imgs;
 export const getImgs = async function (gridArr) {
-  const requireImgsLength = Math.ceil(
-    gridArr.reduce((acc, cur) => acc * cur, 1) / 2
-  );
-  // Getting response
-  const res = await fetch(
-    `${API_INFO.URL}?key=${API_INFO.KEY}&image_type=${API_INFO.TYPE}&per_page=${requireImgsLength}`
-  );
-  // Extracting data
-  const data = await res.json();
+  try {
+    const requireImgsLength = Math.ceil(
+      gridArr.reduce((acc, cur) => acc * cur, 1) / 2
+    );
+    // Getting response
+    const res = await fetch(
+      `${API_INFO.URL}?key=${API_INFO.KEY}&image_type=${API_INFO.TYPE}&per_page=${requireImgsLength}`
+    );
+    if (!res.ok)
+      throw new Error(
+        'Error in loading images! please check your internet connection or try again'
+      );
 
-  // Filling imgs & paths into temp
-  imgs = data.hits
-    .map(el => [
-      { img: el.largeImageURL, id: el.id },
-      { img: el.largeImageURL, id: el.id },
-    ])
-    .flat();
+    // Extracting data
+    const data = await res.json();
 
-  // Filling random imgs & paths into game state
-  for (let i = 0; i < requireImgsLength * 2; i++)
-    state.game.imgsData.push(imgs.splice(randomInt(0, imgs.length), 1));
+    // Filling imgs & paths into temp
+    imgs = data.hits
+      .map(el => [
+        { img: el.largeImageURL, id: el.id },
+        { img: el.largeImageURL, id: el.id },
+      ])
+      .flat();
 
-  state.game.imgsData = state.game.imgsData.flat();
+    // Filling random imgs & paths into game state
+    for (let i = 0; i < requireImgsLength * 2; i++)
+      state.game.imgsData.push(imgs.splice(randomInt(0, imgs.length), 1));
+
+    state.game.imgsData = state.game.imgsData.flat();
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const timer = function () {
@@ -63,4 +72,9 @@ export const loadGame = function () {
   const loadData = JSON.parse(localStorage.getItem('memory-game-data'));
   if (loadData) state.usersData = loadData;
   // model.state.result = game;
+};
+
+export const clearGameData = function () {
+  localStorage.setItem('memory-game-data', JSON.stringify([]));
+  state.usersData = [];
 };
