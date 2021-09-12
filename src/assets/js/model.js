@@ -11,6 +11,11 @@ export const state = {
   play: {
     time: '',
   },
+  result: {
+    time: '',
+    userName: '',
+  },
+  usersData: [],
 };
 
 let imgs;
@@ -41,11 +46,21 @@ export const getImgs = async function (gridArr) {
 };
 
 export const timer = function () {
-  let time = 2;
+  let time = 0;
   const interval = setInterval(() => {
     state.play.time = time;
-    if (!time) clearInterval(interval);
-
-    time--;
+    // if (!time) clearInterval(interval);
+    time++;
   }, 1000);
+};
+
+export const saveGame = function () {
+  state.usersData.unshift(state.result);
+  localStorage.setItem('memory-game-data', JSON.stringify(state.usersData));
+};
+
+export const loadGame = function () {
+  const loadData = JSON.parse(localStorage.getItem('memory-game-data'));
+  if (loadData) state.usersData = loadData;
+  // model.state.result = game;
 };
