@@ -12,6 +12,6 @@
     "parcel": "^2.0.0-rc.0",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.39.0",
-    "@parcel/transformer-sass":"^2.0.0-alpha.3"
+    "@parcel/transformer-sass":"^2.0.0-rc.0"
   }
 }
