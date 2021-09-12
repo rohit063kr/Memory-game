@@ -12,7 +12,7 @@ const controleArrangement = async function () {
     view.renderGame(model.state.usersData);
 
     // Getting Imgs
-    await model.getImgs([3, 2]);
+    await model.getImgs([3, 4]);
 
     // Inserting cards
     model.state.game.imgsData.forEach(data => view.insertCard(data));
