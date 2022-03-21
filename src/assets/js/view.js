@@ -209,14 +209,13 @@ export const renderHtml = function (data) {
   </table>
   <ul class="user__tips-list">
     <li class="user__tips-list-item">
-      This game is build by <a href="">rohit kumar</a> for paracticing
-      javascript skill
+      This game is build by <a href="">rohit kumar</a>.
     </li>
     <li class="user__tips-list-item">
       The score depends on the time you had taken to solve the game
     </li>
     <li class="user__tips-list-item">
-      The timer will start as you select start b  utton
+      The timer will start as you select start button
     </li>
   </ul>
   <div class="user__btns">
